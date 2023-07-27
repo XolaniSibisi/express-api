@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body class="p-3 mb-2 bg-primary-subtle text-emphasis-primary">
+    <h1 class="text-center">Greet API Widget</h1>
+     <div class="container">
+    <div class="section mt-5" x-data="{
+        username : '',
+        greeting : 'Hello',
+        language : '',
+
+        greet(){
+
+            // call the api and get a greeting back
+
+            axios
+               .get(`/api/greet?username=${this.username}&language=${this.language}`)
+               .then(result => {
+
+                if(result.data.error){
+                    this.greeting = result.data.error
+                }
+                else{
+                    this.greeting = result.data.message
+                }
+               }) 
+        }
+    }">
+
+    <div x-text="greeting"></div>
+
+    <div>
+        <input type="radio" x-model="language" value="english" id="english">
+        <label for="english">English</label>
+        <input type="radio" x-model="language" value="zulu" id="zulu">
+        <label for="zulu">IsiZulu</label>
+        <input type="radio" x-model="language" value="xhosa" id="xhosa">
+        <label for="xhosa">IsiXhosa</label>
+    </div>
+
+    <input type="text" x-model="username">
+    <input type="button" value="Greet" class="btn btn-primary" x-on:click="greet()">
+
+    </div>
+    <div class="section mt-5">
+        <h2>Add Language</h2>
+        <div>
+            Language: <input type="text" x-model="new_language" placeholder="new language">
+
+            Greeting: <input type="text" x-model="new_greeting" placeholder="new greeting">
+            <button class="btn btn-primary">Add language</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
