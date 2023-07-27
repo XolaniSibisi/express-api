@@ -1,8 +1,18 @@
-POST http://localhost:4011/api/greet
+POST https://greetings-api-qf2m.onrender.com/api/greet
 content-type: application/json
 
 {
 	"language" : "zulu",
 	"greeting" : "Sawubona"
+}
+
+###
+
+POST https://greetings-api-qf2m.onrender.com/api/greet
+content-type: application/json
+
+{
+	"language" : "xhosa",
+	"greeting" : "Molo"
 }
 
