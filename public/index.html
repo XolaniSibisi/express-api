@@ -11,10 +11,12 @@
 </head>
 <body class="p-3 mb-2 bg-primary-subtle text-emphasis-primary">
     <h1 class="text-center text-bg-dark p-3">Greet API Widget</h1>
-     <div class="container">
+     <div class="container border border-0">
+
     <div class="section mt-5" x-data="{
+
         username : '',
-        greeting : 'Hello',
+        greeting : '',
         language : '',
 
         greet(){
@@ -35,7 +37,7 @@
         }
     }">
 
-    <div class="container text-center">
+    <div class="text-center">
         <div class="row">
             <span x-text="greeting"></span>
           </div>
@@ -55,14 +57,37 @@
     <input type="button" value="Greet" x-on:click="greet()">
 
     </div>
-    <div class="section mt-5">
+    <div class="section mt-5" x-data="{
+
+        new_greeting : '',
+        new_language : '',
+        new_message : '',
+
+        addLanguage(){
+
+            axios.post('/api/greet', {
+                'language' : this.new_language,
+                'greeting' : this.new_greeting
+            })
+            .then(result => {
+                if(this.new_language && this.new_greeting){
+                    console.log(result.data)
+                    this.new_message = result.data.message;
+                }
+                else{
+                    this.new_message = 'Please enter language and greeting';
+                }
+            })
+        }
+    }">
         <h2>Add Language</h2>
         <div>
             Language: <input type="text" x-model="new_language" placeholder="New language">
 
             Greeting: <input type="text" x-model="new_greeting" placeholder="New greeting">
-            <button>Add language</button>
-        </div>
+            <button @click="addLanguage()">Add language</button>
+        </div><br>
+        <div class="message" x-text="new_message"></div>
     </div>
 </div>
 </body>
